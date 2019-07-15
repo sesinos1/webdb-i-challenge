@@ -39,14 +39,13 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     const newacc = req.body
     db('accounts')
-    .insert(newacc, "id").then((newact) => {
+    .insert(newacc, "id").then(() => {
         return db('accounts')
         .where({ ...req.body })
         .first()
     }).then((newact) => {
         res.status(200).json(newact)
-    })
-
+    }).catch(error => res.status(500).json(error));
 })
 
 router.put('/:id', (req, res) => {
